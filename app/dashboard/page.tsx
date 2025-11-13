@@ -147,45 +147,46 @@ export default function DashboardPage() {
         <main className="flex-1 overflow-y-auto pt-4">
           <PageContainer>
             {/* Welcome Banner with all features */}
-            <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white shadow-lg">
+            <div className="mb-6 p-4 md:p-6 rounded-xl bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 text-white shadow-lg">
               {/* Top Row: User info + Actions */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-sm">
-                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-4 lg:mb-6">
+                {/* Left: User Info */}
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-sm flex-shrink-0">
+                    <svg className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold mb-1">
+                    <h1 className="text-xl md:text-2xl font-bold mb-1">
                       Hoş geldiniz, {username}
                     </h1>
-                    <p className="text-blue-100">
+                    <p className="text-sm md:text-base text-blue-100">
                       Sisteminizi buradan yönetebilirsiniz
                     </p>
                   </div>
                 </div>
 
                 {/* Right Side: Search, Notifications, Clock */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 w-full lg:w-auto justify-between lg:justify-end">
                   {/* Search */}
-                  <div className="relative" ref={searchRef}>
+                  <div className="relative flex-1 lg:flex-initial" ref={searchRef}>
                     <div className="relative">
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={handleSearchChange}
                         placeholder="Modül ara..."
-                        className="w-64 pl-10 pr-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+                        className="w-full lg:w-64 pl-10 pr-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
                       />
-                      <svg className="w-5 h-5 absolute left-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 absolute left-3 top-2.5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
                     </div>
 
                     {/* Search Results */}
                     {showSearchResults && (
-                      <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-96 overflow-y-auto">
+                      <div className="fixed lg:absolute left-4 right-4 lg:left-auto lg:right-0 mt-2 lg:w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-96 overflow-y-auto">
                         {filteredModules.length === 0 ? (
                           <div className="p-4 text-center text-gray-500">
                             <p className="text-sm">Sonuç bulunamadı</p>
@@ -212,7 +213,7 @@ export default function DashboardPage() {
                   <div className="relative" ref={dropdownRef}>
                     <button
                       onClick={() => setShowNotifications(!showNotifications)}
-                      className="p-2.5 text-white/90 hover:bg-white/20 rounded-xl transition-all duration-200 relative hover:scale-105"
+                      className="p-2 md:p-2.5 text-white/90 hover:bg-white/20 rounded-xl transition-all duration-200 relative hover:scale-105 flex-shrink-0"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
@@ -223,7 +224,7 @@ export default function DashboardPage() {
                         />
                       </svg>
                       {unreadCount > 0 && (
-                        <span className="absolute top-1 right-1 px-1.5 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full ring-2 ring-white min-w-[18px] text-center">
+                        <span className="absolute top-0.5 right-0.5 px-1.5 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full ring-2 ring-white min-w-[18px] text-center">
                           {unreadCount}
                         </span>
                       )}
@@ -231,7 +232,7 @@ export default function DashboardPage() {
 
                     {/* Notification Dropdown */}
                     {showNotifications && (
-                      <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-[500px] flex flex-col">
+                      <div className="fixed lg:absolute left-4 right-4 lg:left-auto lg:right-0 mt-2 lg:w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-[500px] flex flex-col">
                         {/* Header */}
                         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                           <div className="flex items-center gap-2">
@@ -309,11 +310,11 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Clock */}
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/30">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-1.5 md:gap-2 bg-white/20 backdrop-blur-sm px-3 md:px-4 py-2 rounded-xl border border-white/30 flex-shrink-0">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-lg font-bold text-white">{currentTime}</span>
+                    <span className="text-base md:text-lg font-bold text-white">{currentTime}</span>
                   </div>
                 </div>
               </div>

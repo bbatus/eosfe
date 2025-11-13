@@ -114,9 +114,9 @@ export default function MessagingLayout() {
         <span className="text-gray-900">Mesajlaşma</span>
       </nav>
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
       {/* Sol Panel: Konuşma Listesi */}
-      <div className="w-full md:w-1/4 border-r border-gray-200 flex flex-col">
+      <div className="w-full lg:w-1/4 border-r border-gray-200 flex flex-col">
         <ConversationList
           conversations={conversations}
           activeConversation={activeConversation}
@@ -125,7 +125,7 @@ export default function MessagingLayout() {
       </div>
 
       {/* Orta Panel: Konuşma Penceresi */}
-      <div className="hidden md:flex md:w-2/5 border-r border-gray-200 flex-col">
+      <div className="hidden md:flex lg:w-2/5 border-r border-gray-200 flex-col">
         <ConversationWindow
           conversation={activeConversation}
           messages={activeMessages}
@@ -134,7 +134,7 @@ export default function MessagingLayout() {
       </div>
 
       {/* Sağ Panel: Yeni Mesaj Gönder */}
-      <div className="hidden lg:flex lg:w-1/3 flex-col">
+      <div className="hidden xl:flex lg:w-1/3 flex-col">
         <NewMessagePanel />
       </div>
       </div>
