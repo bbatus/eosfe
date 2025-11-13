@@ -114,8 +114,8 @@ export default function TopBar({ username }: TopBarProps) {
   return (
     <header className="bg-gradient-to-r from-[#2B7FFF] via-[#2470eb] to-[#1a6eef] shadow-lg px-4 md:px-6 py-3.5 mt-4 mx-4 rounded-xl sticky top-4 z-30 border border-white/10">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 ml-12 lg:ml-0">
-          <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-sm">
+        <div className="flex items-center gap-3 ml-1 sm:ml-14 lg:ml-0">
+          <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-sm lg:flex">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
@@ -189,7 +189,7 @@ export default function TopBar({ username }: TopBarProps) {
 
             {/* Dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-[500px] flex flex-col">
+              <div className="fixed sm:absolute left-4 right-4 top-20 sm:left-auto sm:right-0 sm:top-auto mt-0 sm:mt-2 w-auto sm:w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 max-h-[500px] flex flex-col">
                 {/* Header */}
                 <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">

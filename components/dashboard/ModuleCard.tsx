@@ -56,12 +56,14 @@ export default function ModuleCard({ module }: ModuleCardProps) {
           e.stopPropagation();
           toggleFavorite(module.id);
         }}
-        className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-gray-100 transition-colors opacity-0 group-hover:opacity-100 z-10"
+        className={`absolute top-2 right-2 p-2 rounded-lg hover:bg-gray-100 transition-all z-10 ${
+          favorite ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+        }`}
         title={favorite ? 'Favorilerden Çıkar' : 'Favorilere Ekle'}
       >
         <svg
-          className={`w-5 h-5 transition-colors ${
-            favorite ? 'text-yellow-500 fill-yellow-500' : 'text-gray-400'
+          className={`w-5 h-5 transition-all ${
+            favorite ? 'text-yellow-500 fill-yellow-500 scale-110' : 'text-gray-400'
           }`}
           fill={favorite ? 'currentColor' : 'none'}
           stroke="currentColor"

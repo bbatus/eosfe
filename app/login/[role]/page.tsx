@@ -4,15 +4,18 @@ import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function LoginPage() {
   const router = useRouter();
   const params = useParams();
   const role = params.role as string;
+  const { showToast } = useToast();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const roleLabels: Record<string, string> = {
     admin: 'Yönetici',
@@ -21,11 +24,62 @@ export default function LoginPage() {
     parent: 'Veli',
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add authentication logic
-    console.log('Login:', { username, password, role, rememberMe });
-    router.push('/dashboard');
+
+    // Validation
+    if (!username.trim()) {
+      showToast('warning', 'Lütfen kullanıcı adınızı girin!');
+      return;
+    }
+
+    if (!password.trim()) {
+      showToast('warning', 'Lütfen şifrenizi girin!');
+      return;
+    }
+
+    if (password.length < 4) {
+      showToast('warning', 'Şifreniz en az 4 karakter olmalıdır!');
+      return;
+    }
+
+    setIsLoading(true);
+
+    // Simulated authentication (Backend entegrasyonunda bu kısım değişecek)
+    try {
+      // Backend'e istek atılacak
+      // const response = await fetch('/api/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ username, password, role, rememberMe }),
+      // });
+
+      // Simülasyon: Demo amaçlı her zaman başarılı kabul ediyoruz
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 saniye bekleme
+
+      // Demo: Bazı kullanıcı adları için hata göster
+      if (username.toLowerCase() === 'error') {
+        throw new Error('Hatalı kullanıcı adı veya şifre!');
+      }
+
+      if (username.toLowerCase() === 'banned') {
+        throw new Error('Hesabınız askıya alınmıştır. Lütfen yönetici ile iletişime geçin.');
+      }
+
+      // Başarılı giriş
+      showToast('success', 'Giriş başarılı! Yönlendiriliyorsunuz...', 2000);
+      
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
+
+    } catch (error) {
+      // Hata durumunda
+      const errorMessage = error instanceof Error ? error.message : 'Giriş başarısız! Lütfen bilgilerinizi kontrol edin.';
+      showToast('error', errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -35,14 +89,18 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <button 
             onClick={() => router.push('/')}
-            className="inline-flex items-center justify-center w-16 h-16 bg-[#2B7FFF] rounded-xl mb-4 hover:bg-[#1a6eef] transition-colors"
+            className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-4 hover:shadow-lg transition-all border-2 border-gray-100"
           >
-            <span className="text-3xl font-bold text-white">E</span>
+            <img 
+              src="/eoslogomavi.png" 
+              alt="EOS Logo" 
+              className="w-14 h-14 object-contain"
+            />
           </button>
           <h2 className="text-2xl font-bold text-gray-900 mb-1">
-            {roleLabels[role] || 'Kullanıcı'} Girişi
+            EOS'a Hoş Geldin!
           </h2>
-          <p className="text-sm text-gray-500">Hesabınıza giriş yapın</p>
+          <p className="text-sm text-gray-500">{roleLabels[role] || 'Kullanıcı'} girişi</p>
         </div>
 
         {/* Login Form Card */}
@@ -83,8 +141,24 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <Button type="submit" variant="primary" fullWidth className="py-3 mt-6">
-              Giriş Yap
+            <Button 
+              type="submit" 
+              variant="primary" 
+              fullWidth 
+              className="py-3 mt-6"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>Giriş yapılıyor...</span>
+                </div>
+              ) : (
+                'Giriş Yap'
+              )}
             </Button>
           </form>
         </div>

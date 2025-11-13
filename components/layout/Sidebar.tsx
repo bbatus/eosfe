@@ -64,24 +64,22 @@ export default function Sidebar({ userRole, isCollapsed = false, onToggleCollaps
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md border border-gray-200"
-      >
-        <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {isMobileMenuOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
+      {/* Mobile Menu Button - Hamburger */}
+      {!isMobileMenuOpen && (
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="lg:hidden fixed top-6 left-4 z-50 p-2.5 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow"
+        >
+          <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
+          </svg>
+        </button>
+      )}
 
       {/* Overlay for mobile */}
       {isMobileMenuOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="lg:hidden fixed inset-0 bg-gradient-to-r from-gray-900/80 to-gray-900/40 backdrop-blur-sm z-40"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -96,11 +94,27 @@ export default function Sidebar({ userRole, isCollapsed = false, onToggleCollaps
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
+        {/* Mobile Close Button - Inside Sidebar */}
+        {isMobileMenuOpen && (
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="lg:hidden absolute top-5 right-4 z-50 p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          >
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+
         {/* Logo */}
         <div className="p-5 border-b border-gray-200 bg-gradient-to-br from-white to-gray-50 relative">
           <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'}`}>
-            <div className="w-11 h-11 bg-gradient-to-br from-[#2B7FFF] via-[#2470eb] to-[#1a6eef] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/20 ring-2 ring-blue-100 flex-shrink-0">
-              E
+            <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md shadow-blue-500/10 ring-2 ring-blue-100 flex-shrink-0 p-1.5">
+              <img 
+                src="/eoslogomavi.png" 
+                alt="EOS Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             {!collapsed && (
               <div className="transition-opacity duration-200">
